@@ -13,7 +13,7 @@ pipeline {
         stage('checkout') {
             steps {
                  script{
-                        dir("aws-pipleine-jenking")
+                        dir("/aws-pipleine-jenking/")
                         {
                             git "https://github.com/ssantoshaws2/git-jenking-aws-pipeline-11-aug.git"
                         }
@@ -23,9 +23,9 @@ pipeline {
 
         stage('Plan') {
             steps {
-                sh 'pwd;cd aws-pipleine-jenking/ ; terraform init'
-                sh "pwd;cd aws-pipleine-jenking/ ; terraform plan -out tfplan"
-                sh 'pwd;cd aws-pipleine-jenking/ ; terraform show -no-color tfplan > tfplan.txt'
+                sh 'pwd;cd /aws-pipleine-jenking/ ; terraform init'
+                sh "pwd;cd /aws-pipleine-jenking/ ; terraform plan -out tfplan"
+                sh 'pwd;cd /aws-pipleine-jenking/ ; terraform show -no-color tfplan > tfplan.txt'
             }
         }
         stage('Approval') {
@@ -46,7 +46,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "pwd;cd aws-pipleine-jenking/ ; terraform apply -input=false tfplan"
+                sh "pwd;cd /aws-pipleine-jenking/ ; terraform apply -input=false tfplan"
             }
         }
     }
