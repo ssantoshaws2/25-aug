@@ -1,54 +1,90 @@
 pipeline {
-
+ 
+    agent any
+    
     parameters {
-        booleanParam(name: 'autoApprove', defaultValue: true, description: 'Automatically run apply after generating plan?')
+           booleanParam(name: 'PLAN_TERRAFORM', defaultValue: false, description: 'Check to plan Terraform changes')
+            booleanParam(name: 'APPLY_TERRAFORM', defaultValue: false, description: 'Check to apply Terraform changes')
+            booleanParam(name: 'DESTROY_TERRAFORM', defaultValue: false, description: 'Check to apply Terraform changes')
     } 
     environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
-   agent any
-    stages {
-        stage('checkout') {
+stages {
+        stage('Clone Repository') {
             steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "https://github.com/ssantoshaws2/git-jenking-aws-pipeline-11-aug.git"
+                // Clean workspace before cloning (optional)
+                deleteDir()
+
+                // Clone the Git repository
+                git branch: 'main',
+                    url: 'https://github.com/ssantoshaws2/git-jenking-aws-pipeline-11-aug.git'
+
+                sh "ls -lart"
+            }
+        }
+
+
+     stage('Terraform Init') {
+                    steps {
+                      // withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-rwagh']]){
+                            dir('infra') {
+                            sh 'echo "=================Terraform Init=================="'
+                            sh 'terraform init'
+                        }
+                    }
+                }
+        }
+    
+  
+stage('Terraform Plan') {
+            steps {
+                script {
+                    if (params.PLAN_TERRAFORM) {
+                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-rwagh']]){
+                            dir('infra') {
+                                sh 'echo "=================Terraform Plan=================="'
+                                sh 'terraform plan'
+                            }
                         }
                     }
                 }
             }
+        }
 
-        stage('Plan') {
+        stage('Terraform Apply') {
             steps {
-                sh 'pwd;cd terraform/ ; terraform init'
-                sh "pwd;cd terraform/ ; terraform plan -out tfplan"
-                sh 'pwd;cd terraform/ ; terraform show -no-color tfplan > tfplan.txt'
+                script {
+                    if (params.APPLY_TERRAFORM) {
+                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-rwagh']]){
+                            dir('infra') {
+                                sh 'echo "=================Terraform Apply=================="'
+                                sh 'terraform apply -auto-approve'
+                            }
+                        }
+                    }
+                }
             }
         }
-        stage('Approval') {
-          when {
-             not {
-                 equals expected: true, actual: params.autoApprove
-             }
-          }
 
-           steps {
-               script {
-                    def plan = readFile 'terraform/tfplan.txt'
-                    input message: "Do you want to apply the plan?",
-                    parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-               }
-           }
-       }
-
-        stage('Apply') {
+        stage('Terraform Destroy') {
             steps {
-                sh "pwd;cd terraform/ ; terraform apply -input=false tfplan"
+                script {
+                    if (params.DESTROY_TERRAFORM) {
+                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-rwagh']]){
+                            dir('infra') {
+                                sh 'echo "=================Terraform Destroy=================="'
+                                sh 'terraform destroy -auto-approve'
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
+}
     }
 
   }
