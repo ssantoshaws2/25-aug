@@ -1,35 +1,28 @@
 pipeline {
     agent any
-    
+
     stages {
-      //  stage('Checkout Code') {
-       //     steps {
-         //       checkout scm
-          //  }
-       // }
-        stage('Terraform Init') {
+        stage('Checkout') {
             steps {
-                script {
-                    sh 'terraform init'
-                }
+                git 'https://github.com/ssantoshaws2/git-jenking-aws-pipeline-11-aug.git'
+        }
+        stage('Terraform init') {
+            steps {
+                sh 'terraform init'
             }
         }
-        stage('Terraform Plan') {
+        
+        stage('Terraform plan') {
             steps {
-                script {
-                    sh 'terraform plan'
-                }
+                sh 'terraform plan'
             }
         }
-        stage('Terraform Apply') {
+        
+        stage('Terraform apply') {
             steps {
-                script {
-                    sh 'terraform apply -auto-approve '
-                }
+                sh 'terraform apply --auto-approve'
             }
         }
         
     }
-    
 }
-
