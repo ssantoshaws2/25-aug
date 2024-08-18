@@ -1,14 +1,12 @@
 pipeline {
     agent any
-    environment {
-        AWS_DEFAULT_REGION = 'ap-south-1'
-    }
+    
     stages {
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
+      //  stage('Checkout Code') {
+       //     steps {
+         //       checkout scm
+          //  }
+       // }
         stage('Terraform Init') {
             steps {
                 script {
