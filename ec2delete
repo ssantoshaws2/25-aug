@@ -19,7 +19,7 @@ pipeline {
             }
         }
         
-        stage('Terraform destroy') {
+        stage('Terraform destroy EC2') {
             steps {
                 sh 'terraform destroy --auto-approve'
             }
