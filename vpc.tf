@@ -1,5 +1,5 @@
 
-resource "aws_vpc" "main2" {
+resource "aws_vpc" "main" {
   cidr_block = "200.0.0.0/16"
 
   tags = {
