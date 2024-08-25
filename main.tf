@@ -22,7 +22,7 @@ resource "aws_instance" "web_instanc3" {
   key_name                    = "jenking"
   subnet_id                   = aws_subnet.ss_public_subnet.id
   associate_public_ip_address = "true"
- // vpc_security_group_ids      = [aws_security_group.web_sg.id]
+ vpc_security_group_ids      = [aws_security_group.web_sg.id]
   tags = {
   Name = "web-server3" }
 
