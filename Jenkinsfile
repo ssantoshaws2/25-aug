@@ -23,7 +23,8 @@ pipeline {
         
         stage('Terraform apply -3') {
             steps {
-                sh 'terraform apply --auto-approve'
+               // sh 'terraform apply --auto-approve'
+               sh 'terraform destroy --auto-approve'
             }
         }
         
