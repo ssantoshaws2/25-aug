@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // git 'https://github.com/ssantoshaws2/git-jenking-aws-pipeline-11-aug.git'
+                 git 'https://github.com/ssantoshaws2/26-aug.git'
         }
         }
         stage('Terraform init-1') {
