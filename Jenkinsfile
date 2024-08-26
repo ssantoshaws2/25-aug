@@ -3,6 +3,14 @@
 pipeline {
     agent any
     
+    step
+{
+ emailext mimeType: ‘text/html’,
+ subject: “APPROVAL RQD[JENKINS] ${currentBuild.fullDisplayName}”,
+ to: “ssantosh.srivastava@yahoo.com “,
+ body: ‘’’<a href=”${BUILD_URL}input”>click to approve</a>’’’
+}
+
     stages {
         stage('Checkout') {
             steps {
