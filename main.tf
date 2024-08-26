@@ -29,6 +29,7 @@ resource "aws_instance" "web_instanc3" {
   }
 user_data =  <<-EOF
  #!/bin/bash
+ sudo -i
 yum update -y
 yum install httpd -y
 echo "<html><h1>webpage 1(whatever you want, give the page name here)</h1></html>"
