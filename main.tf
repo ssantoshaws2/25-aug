@@ -24,7 +24,7 @@ resource "aws_instance" "web_instanc3" {
   associate_public_ip_address = "true"
  vpc_security_group_ids      = [aws_security_group.web_sg.id]
   tags = {
-  Name = "web-server3" 
+  Name = "web-server01" 
     }
 user_data =  <<-EOF
  #!/bin/bash
