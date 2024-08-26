@@ -3,15 +3,15 @@
 pipeline {
     agent any
     
-    step
-{
- emailext mimeType: ‘text/html’,
- subject: “APPROVAL RQD[JENKINS] ${currentBuild.fullDisplayName}”,
- to: “ssantosh.srivastava@yahoo.com “,
- body: ‘’’<a href=”${BUILD_URL}input”>click to approve</a>’’’
-}
+ 
 
-    stages {
+    stages
+    
+      stage('Deploy approval'){
+      input "Deploy to prod?"
+      } 
+      
+       {
         stage('Checkout') {
             steps {
                  git 'https://github.com/ssantoshaws2/25-aug.git'
