@@ -14,7 +14,7 @@ pipeline {
 	                ok 'Submit'
 	                submitterParameter 'approverId'
 	                parameters {
-	                    choice choices: ['Prod', 'Pre-Prod'], name: 'envType'
+	                    choice choices: ['Prod', 'Pre-Prod' ,'Test'], name: 'envType'
 	                }
 	            }
 

@@ -25,8 +25,7 @@ resource "aws_instance" "web_instanc3" {
  vpc_security_group_ids      = [aws_security_group.web_sg.id]
   tags = {
   Name = "web-server3" 
-  Patch = "E1"
-  }
+    }
 user_data =  <<-EOF
  #!/bin/bash
  sudo -i
