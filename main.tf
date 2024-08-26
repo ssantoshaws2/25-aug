@@ -28,12 +28,13 @@ resource "aws_instance" "web_instanc3" {
   Patch = "E1"
   }
 user_data =  <<-EOF
-                    #!/bin/bash
-               sudo -i
-   
-    yum install -y httpd
-    chkconfig httpd on
-    service httpd start
+ #!/bin/bash
+yum update -y
+yum install httpd -y
+echo "<html><h1>webpage 1(whatever you want, give the page name here)</h1></html>"
+/var/www/html/index.html
+service httpd start
+chkconfig httpd on
 EOF
 
 }
