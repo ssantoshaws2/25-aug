@@ -7,10 +7,23 @@ pipeline {
 
     stages
     
-      stage('Deploy approval'){
-      input "Deploy to prod?"
-      } 
-      
+      stage('Approve based on environment lead') {
+	            input {
+	                message 'Please select environment'
+	                id 'envId'
+	                ok 'Submit'
+	                submitterParameter 'approverId'
+	                parameters {
+	                    choice choices: ['Prod', 'Pre-Prod'], name: 'envType'
+	                }
+	            }
+
+	            steps {
+	                echo "Deployment approved to ${envType} by ${approverId}."
+
+	            }
+	        }
+
        {
         stage('Checkout') {
             steps {
