@@ -6,7 +6,7 @@ pipeline {
  
 
     stages
-    
+    {
       stage('Approve based on environment lead') {
 	            input {
 	                message 'Please select environment'
@@ -19,12 +19,12 @@ pipeline {
 	            }
 
 	            steps {
-	                echo "Deployment approved to ${envType} by ${approverId}."
+	               echo "Deployment approved to ${envType} by ${approverId}."
 
 	            }
 	        }
 
-       {
+      
         stage('Checkout') {
             steps {
                  git 'https://github.com/ssantoshaws2/25-aug.git'
