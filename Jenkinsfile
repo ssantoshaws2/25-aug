@@ -1,7 +1,7 @@
 
 
 pipeline {
-    agent node002
+    agent node001
     
  
 
