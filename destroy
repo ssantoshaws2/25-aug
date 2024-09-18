@@ -1,7 +1,7 @@
 
 
 pipeline {
-    agent {label 'node001' }
+    agent {label 'docker_cont' }
  
 
     stages
