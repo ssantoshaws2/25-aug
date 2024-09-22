@@ -1,8 +1,7 @@
 
 
 pipeline {
-   # agent {label 'docker_cont' }
-     agent any
+        agent any
 
     stages
     {
